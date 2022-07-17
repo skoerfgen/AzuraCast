@@ -125,7 +125,7 @@ final class Acme
         if (
             !$force
             && file_exists($acmeDir . '/acme.crt')
-            && $this->compareSan($domains,$acme->getSAN('file://' . $acmeDir . '/acme.crt'))
+            && self::compareSan($domains,$acme->getSAN('file://' . $acmeDir . '/acme.crt'))
             && $acme->getRemainingDays('file://' . $acmeDir . '/acme.crt') > self::THRESHOLD_DAYS
         ) {
             throw new RuntimeException('Certificate does not need renewal.');
@@ -215,7 +215,7 @@ final class Acme
         ];
     }
 
-    private static function compareSan($a,$b): bool
+    private static function compareSan(array $a, array $b): bool
     {
         return count($a)===count($b) && !array_diff($a,$b);
     }
